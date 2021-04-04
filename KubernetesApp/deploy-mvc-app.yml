@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: app-deploy
+  labels: 
+    name: app-deploy
+    app: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+      type: mvc
+  template: 
+    metadata: 
+      name: app-pod
+      labels: 
+          app: app
+          type: mvc
+    spec: 
+      containers: 
+        - name: app-mvc
+          image: gusdaza/mvc-prototipo:v2.0
+          ports: 
+            - containerPort: 80  
+          env: 
+            - name: ConnectionStrings__ContextoCurso
+              value: Data Source=mssql-service; Initial Catalog=DemoCursos; user=sa; password=1234
